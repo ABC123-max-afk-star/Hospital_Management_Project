@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}HMS AI{% endblock %}</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1e40af;
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --danger: #dc2626;
+    --warning: #d97706;
+    --success: #16a34a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    min-height: 100vh;
+  }
+  nav {
+    width: 220px;
+    background: var(--primary-dark);
+    color: white;
+    padding: 24px 0;
+    flex-shrink: 0;
+  }
+  nav .brand {
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    margin-bottom: 10px;
+  }
+  nav a {
+    display: block;
+    color: #dbeafe;
+    text-decoration: none;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+  nav a:hover { background: rgba(255,255,255,0.1); }
+  main {
+    flex: 1;
+    padding: 32px;
+    max-width: 1100px;
+  }
+  h1 { margin-top: 0; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+  }
+  th { color: var(--muted); font-weight: 600; }
+  .btn {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 9px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--primary-dark); }
+  form .field { margin-bottom: 14px; }
+  label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 4px; }
+  input[type=text], input[type=number], input[type=date], input[type=time], select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.92rem;
+  }
+  .checkbox-field { display: flex; align-items: center; gap: 8px; }
+  .checkbox-field input { width: auto; }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .stat-card .num { font-size: 1.7rem; font-weight: 700; }
+  .stat-card .label { color: var(--muted); font-size: 0.85rem; }
+  .badge {
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .badge.low { background: #dcfce7; color: var(--success); }
+  .badge.moderate { background: #fef3c7; color: var(--warning); }
+  .badge.high { background: #fee2e2; color: var(--danger); }
+  .flash {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    background: #dcfce7;
+    color: #14532d;
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">🏥 HMS + AI</div>
+  <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+  <a href="{{ url_for('main.patient_list') }}">Patients</a>
+  <a href="{{ url_for('main.doctor_list') }}">Doctors</a>
+  <a href="{{ url_for('main.appointment_list') }}">Appointments</a>
+</nav>
+<main>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for m in messages %}
+        <div class="flash">{{ m }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+</body>
+</html>

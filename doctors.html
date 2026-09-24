@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Doctors{% endblock %}
+{% block content %}
+<h1>Doctors</h1>
+<a class="btn" href="{{ url_for('main.add_doctor') }}">+ Add Doctor</a>
+<div class="card" style="margin-top:20px;">
+  {% if doctors %}
+  <table>
+    <tr><th>Name</th><th>Specialization</th><th>Available</th></tr>
+    {% for d in doctors %}
+    <tr>
+      <td>{{ d.name }}</td>
+      <td>{{ d.specialization }}</td>
+      <td>{{ 'Yes' if d.available else 'No' }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p>No doctors yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

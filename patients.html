@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Patients{% endblock %}
+{% block content %}
+<h1>Patients</h1>
+<a class="btn" href="{{ url_for('main.add_patient') }}">+ Add Patient</a>
+<div class="card" style="margin-top:20px;">
+  {% if patients %}
+  <table>
+    <tr><th>Name</th><th>Age</th><th>Gender</th><th>Contact</th><th>Heart-Disease Risk</th><th></th></tr>
+    {% for p in patients %}
+    <tr>
+      <td>{{ p.name }}</td>
+      <td>{{ p.age }}</td>
+      <td>{{ p.gender or '-' }}</td>
+      <td>{{ p.contact or '-' }}</td>
+      <td>
+        {% if p.risk_label %}
+        <span class="badge {{ p.risk_label|lower }}">{{ p.risk_label }} ({{ (p.risk_score*100)|round(1) }}%)</span>
+        {% else %} - {% endif %}
+      </td>
+      <td><a href="{{ url_for('main.patient_detail', patient_id=p.id) }}">View</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p>No patients yet.</p>
+  {% endif %}
+</div>
+{% endblock %}
+copy

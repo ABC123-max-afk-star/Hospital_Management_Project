@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Add Doctor{% endblock %}
+{% block content %}
+<h1>Add Doctor</h1>
+<div class="card">
+<form method="POST">
+  <div class="field">
+    <label>Name</label>
+    <input type="text" name="name" required>
+  </div>
+  <div class="field">
+    <label>Specialization</label>
+    <input type="text" name="specialization" required placeholder="e.g. Cardiology">
+  </div>
+  <div class="field checkbox-field">
+    <input type="checkbox" name="available" id="available" checked>
+    <label for="available" style="margin:0;">Currently Available</label>
+  </div>
+  <button class="btn" type="submit">Save Doctor</button>
+</form>
+</div>
+{% endblock %}

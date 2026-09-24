@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ patient.name }}{% endblock %}
+{% block content %}
+<h1>{{ patient.name }}</h1>
+<div class="card">
+  <table>
+    <tr><th>Age</th><td>{{ patient.age }}</td></tr>
+    <tr><th>Gender</th><td>{{ patient.gender or '-' }}</td></tr>
+    <tr><th>Contact</th><td>{{ patient.contact or '-' }}</td></tr>
+    <tr><th>Resting BP</th><td>{{ patient.resting_bp }} mmHg</td></tr>
+    <tr><th>Cholesterol</th><td>{{ patient.cholesterol }} mg/dL</td></tr>
+    <tr><th>BMI</th><td>{{ patient.bmi }}</td></tr>
+    <tr><th>Max Heart Rate</th><td>{{ patient.max_heart_rate }}</td></tr>
+    <tr><th>Smoker</th><td>{{ 'Yes' if patient.smoker else 'No' }}</td></tr>
+    <tr><th>Exercise (hrs/week)</th><td>{{ patient.exercise_hours_week }}</td></tr>
+    <tr><th>Family History</th><td>{{ 'Yes' if patient.family_history else 'No' }}</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3>AI Risk Assessment</h3>
+  {% if patient.risk_label %}
+  <p>Predicted heart-disease risk:
+    <span class="badge {{ patient.risk_label|lower }}">{{ patient.risk_label }} ({{ (patient.risk_score*100)|round(1) }}%)</span>
+  </p>
+  {% else %}
+  <p>No prediction available.</p>
+  {% endif %}
+</div>
+
+<a class="btn" href="{{ url_for('main.patient_list') }}">Back to Patients</a>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - HMS AI{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="num">{{ patient_count }}</div>
+    <div class="label">Total Patients</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">{{ doctor_count }}</div>
+    <div class="label">Doctors</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">{{ appt_count }}</div>
+    <div class="label">Appointments</div>
+  </div>
+  <div class="stat-card">
+    <div class="num" style="color:#dc2626">{{ high_risk_count }}</div>
+    <div class="label">High Heart-Disease Risk</div>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Recently Added Patients</h3>
+  {% if recent_patients %}
+  <table>
+    <tr><th>Name</th><th>Age</th><th>Risk</th><th></th></tr>
+    {% for p in recent_patients %}
+    <tr>
+      <td>{{ p.name }}</td>
+      <td>{{ p.age }}</td>
+      <td>
+        {% if p.risk_label %}
+        <span class="badge {{ p.risk_label|lower }}">{{ p.risk_label }} ({{ (p.risk_score*100)|round(1) }}%)</span>
+        {% else %} - {% endif %}
+      </td>
+      <td><a href="{{ url_for('main.patient_detail', patient_id=p.id) }}">View</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p>No patients yet. <a href="{{ url_for('main.add_patient') }}">Add one</a>.</p>
+  {% endif %}
+</div>
+{% endblock %}
